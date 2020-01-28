@@ -2,9 +2,9 @@ package com.theaviddev.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.theaviddev.game.Player.Player;
 import com.theaviddev.game.World.WorldManager;
 
 /**
@@ -13,9 +13,7 @@ import com.theaviddev.game.World.WorldManager;
 public class Worshipper extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private WorldManager worldManager;
-	
-	private float x = 0;
-	private float y = 0;
+	private Player player;
 	
 	/**
 	 * Initializes required objects.
@@ -26,7 +24,12 @@ public class Worshipper extends ApplicationAdapter {
 		
 		worldManager = new WorldManager();
 		worldManager.loadBlocks();
+		
+		player = new Player(0, 0);
+		player.loadTexture();
+		player.assignTexture();
 	}
+	
 	
 	/**
 	 * Renders all screen elements.
@@ -36,22 +39,11 @@ public class Worshipper extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		worldManager.draw(batch, x, y);
+		worldManager.draw(batch, player.getX(), player.getY());
+		player.draw(batch);
 		batch.end();
 		
-		float mult = 5;
-		if(Gdx.input.isKeyPressed(Keys.W)) {
-		     y += 1f * mult;
-		}
-		if(Gdx.input.isKeyPressed(Keys.A)) {
-		     x -= 1f * mult;
-		}
-		if(Gdx.input.isKeyPressed(Keys.S)) {
-		     y -= 1f * mult;
-		}
-		if(Gdx.input.isKeyPressed(Keys.D)) {
-		     x += 1f * mult;
-		}
+		player.update();
 	}
 	
 	/**
