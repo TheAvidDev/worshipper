@@ -81,7 +81,6 @@ public class WorldManager {
 			Chunk c = new Chunk();
 			c.generate(coords.x, coords.y, elevationPreciseNoise, elevationGeneralNoise, temperatureGeneralNoise, precipitationGeneralNoise);
 			chunkCache.put(coords, c);
-			System.out.println("Added chunk " + coords.toString() + " to cache...");
 			return c;
 		} else {
 			return chunkCache.get(coords);
