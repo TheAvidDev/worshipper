@@ -50,7 +50,7 @@ public class Player {
 	 */
 	public void update(float dt) {
 		updatePosition(dt);
-		updateDirection();
+		updateRotation();
 	}
 	
 	/**
@@ -77,11 +77,20 @@ public class Player {
 	}
 	
 	/**
-	 * Updates the player direction.
+	 * Updates the player rotation.
 	 */
-	private void updateDirection() {		
-		if (vx != 0 && vy != 0) {
+	private void updateRotation() {		
+		if (vx != 0 || vy != 0) {
 			rotation = (float) (Math.atan2(vy, vx) / Math.PI * 180 - 90);
+		} else if (vx == 0 && vy != 0) {
+			rotation = vy > 0 ? 0 : 180;
+		} else if (vy == 0 && vx != 0) {
+			rotation = vx > 0 ? -90 : 90;
+		}
+		
+		if (Math.abs(vx) < 0.1 && Math.abs(vx) < 0.1) {
+			vx = 0;
+			vy = 0;
 		}
 		
 		vx *= 0.5;
