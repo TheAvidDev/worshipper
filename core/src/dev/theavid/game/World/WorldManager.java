@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import dev.theavid.game.Player.PlayerManager;
 import dev.theavid.game.Util.OpenSimplexNoise;
 
 /**
@@ -19,7 +20,7 @@ public class WorldManager {
 	public static final int BLOCK_SIZE = 16;
 	public static final int CHUNK_SIZE = 32;
 	public static final int WORLD_SIZE = 128;
-	public static final int CHUNK_CACHE = 128;
+	public static final int CHUNK_CACHE_SIZE = 64;
 	
 	private AssetManager manager;
 	
@@ -39,6 +40,7 @@ public class WorldManager {
 		chunkCache = new HashMap<Point, Chunk>();
 	}
 	
+	
 	/**
 	 * Draws world onto the SpriteBatch.
 	 * 
@@ -46,17 +48,25 @@ public class WorldManager {
 	 * @param playerX Player x coordinate.
 	 * @param playerY Player y coordinate.
 	 */
-	public void draw(SpriteBatch batch, float playerX, float playerY) {
-		int cX = (int) Math.floor((playerX + Gdx.graphics.getWidth() / 2) / CHUNK_SIZE / BLOCK_SIZE);
-		int cY = (int) Math.floor((playerY + Gdx.graphics.getHeight() / 2) / CHUNK_SIZE / BLOCK_SIZE);
+	public void draw(SpriteBatch batch) {
+		int cX = (int) Math.floor((PlayerManager.getPlayerX() + Gdx.graphics.getWidth() / 2) / CHUNK_SIZE / BLOCK_SIZE);
+		int cY = (int) Math.floor((PlayerManager.getPlayerY() + Gdx.graphics.getHeight() / 2) / CHUNK_SIZE / BLOCK_SIZE);
 		
 		for (int x = -2; x <= 2; x ++) {
 			for (int y = -1; y <= 1; y ++) {
 				Point chunkCoords = new Point(cX+x, cY+y);
 				Chunk c = getChunk(chunkCoords);
-				c.draw(batch, chunkCoords.x, chunkCoords.y, -playerX, -playerY);
+				c.draw(batch, chunkCoords.x, chunkCoords.y, -PlayerManager.getPlayerX(), -PlayerManager.getPlayerY());
 			}
 		}
+	}
+	
+	/**
+	 * Updates everything having to do with chunks which
+	 * currently includes updating the chunk cache.
+	 */
+	public void update() {
+		cleanChunkCache();
 	}
 	
 	/**
@@ -71,9 +81,34 @@ public class WorldManager {
 			Chunk c = new Chunk();
 			c.generate(coords.x, coords.y, elevationPreciseNoise, elevationGeneralNoise, temperatureGeneralNoise, precipitationGeneralNoise);
 			chunkCache.put(coords, c);
+			System.out.println("Added chunk " + coords.toString() + " to cache...");
 			return c;
 		} else {
 			return chunkCache.get(coords);
+		}
+	}
+	
+	/**
+	 * Cleans the chunk cache by continuously finding the farthest chunk
+	 * from the player and removing it from the cache until there are
+	 * CHUNK_CACHE_SIZE chunk. Only cleans if there are currently more
+	 * than CHUNK_CACHE_SIZE chunks.
+	 */
+	private void cleanChunkCache() {
+		while (chunkCache.size() > CHUNK_CACHE_SIZE) {
+			double furthestDistance = Double.MIN_VALUE;
+			Point playerChunkCoords = PlayerManager.getPlayerChunk();
+			Point furthestChunkCoords = playerChunkCoords;
+			
+			for (Point p : chunkCache.keySet()) {
+				double distance = p.distance(playerChunkCoords);
+				if (distance > furthestDistance) {
+					furthestChunkCoords = p;
+					furthestDistance = distance;
+				}
+			}
+			
+			chunkCache.remove(furthestChunkCoords);
 		}
 	}
 	

@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import dev.theavid.game.Player.Player;
+import dev.theavid.game.Player.PlayerManager;
 import dev.theavid.game.World.WorldManager;
 
 /**
@@ -13,8 +13,8 @@ import dev.theavid.game.World.WorldManager;
  */
 public class Worshipper extends ApplicationAdapter {
 	private SpriteBatch batch;
-	private WorldManager worldManager;
-	private Player player;
+	private static WorldManager worldManager;
+	private PlayerManager playerManager;
 	
 	/**
 	 * Initializes required objects.
@@ -26,9 +26,9 @@ public class Worshipper extends ApplicationAdapter {
 		worldManager = new WorldManager();
 		worldManager.loadBlocks();
 		
-		player = new Player(0, 0);
-		player.loadTexture();
-		player.assignTexture();
+		playerManager = new PlayerManager();
+		playerManager.createMainPlayer(0, 0);
+		playerManager.loadTextures();
 	}
 	
 	
@@ -40,12 +40,13 @@ public class Worshipper extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		worldManager.draw(batch, player.getX(), player.getY());
-		player.draw(batch);
+		worldManager.draw(batch);
+		playerManager.draw(batch);
 		batch.end();
 		
 		float dt = Gdx.graphics.getDeltaTime();
-		player.update(dt);
+		worldManager.update();
+		playerManager.update(dt);
 	}
 	
 	/**

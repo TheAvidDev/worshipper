@@ -14,7 +14,6 @@ public class Player {
 	private float rotation;
 	
 	private Texture texture;
-	private AssetManager manager;
 	
 	/**
 	 * Create a player at a location.
@@ -29,16 +28,30 @@ public class Player {
 		vy = 0;
 	}
 	
-	public void loadTexture() {
-		manager = new AssetManager();
+	/**
+	 * Loads the player texture.
+	 * 
+	 * @param manager {@link AssetManager} to load the texture
+	 * in to.
+	 */
+	public void loadTexture(AssetManager manager) {
 		manager.load("player/player.png", Texture.class);
-		manager.finishLoading();
 	}
 	
-	public void assignTexture() {
+	/**
+	 * Assigns the player texture to the player.
+	 * 
+	 * @param manager {@link AssetManager} which contains
+	 * the loaded texture.
+	 */
+	public void assignTexture(AssetManager manager) {
 		texture = manager.get("player/player.png", Texture.class);
 	}
 	
+	/**
+	 * Draws the player on the screen.
+	 * @param batch {@link SpriteBatch} to draw on.
+	 */
 	public void draw(SpriteBatch batch) {
 		batch.draw(texture, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 8, 8, 16, 16, 1, 1, rotation, 0, 0, 16, 16, false, false);
 	}
