@@ -57,25 +57,6 @@ public class Chunk {
 		}
 	}
 	
-	/** 
-	 * Desert biome generation.
-	 * 
-	 * @param precise_elevation The precise elevation of the block.
-	 * @param x X coordinate of the block.
-	 * @param y Y coordinate of the block.
-	 */
-	private void desertBiome(double precise_elevation, int x, int y) {
-		if (precise_elevation < 0) {
-			blocks[x][y] = new Block(BlockID.SAND);
-		} else if (precise_elevation < 0.1) {
-			blocks[x][y] = new Block(BlockID.RED_SAND);
-		} else if (precise_elevation < 0.15) {
-			blocks[x][y] = new Block(BlockID.SAND);
-		} else {
-			blocks[x][y] = new Block(BlockID.RED_SAND);
-		}
-	}
-	
 	/**
 	 * Generates the blocks in a chunk based off of {@link OpenSimplexNoise}.
 	 * 
