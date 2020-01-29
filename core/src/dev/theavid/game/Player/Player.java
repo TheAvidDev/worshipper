@@ -80,8 +80,12 @@ public class Player {
 	 * Updates the player direction.
 	 */
 	private void updateDirection() {		
-		if (vx != 0 && vy != 0) {
+		if (vx != 0 || vy != 0) {
 			rotation = (float) (Math.atan2(vy, vx) / Math.PI * 180 - 90);
+		} else if (vx == 0 && vy != 0) {
+			rotation = vy > 0 ? 0 : 180;
+		} else if (vy == 0 && vx != 0) {
+			rotation = vx > 0 ? -90 : 90;
 		}
 		
 		vx *= 0.5;
