@@ -1,10 +1,10 @@
 package dev.theavid.game.World;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import dev.theavid.game.Entities.TileEntity;
 import dev.theavid.game.Util.OpenSimplexNoise;
 
 /** 
@@ -12,6 +12,12 @@ import dev.theavid.game.Util.OpenSimplexNoise;
  */
 public class Chunk {
 	private Block[][] blocks;
+	private ArrayList<TileEntity> tileEntities;
+	
+	public Chunk() {
+		tileEntities = new ArrayList<TileEntity>();
+		tileEntities.add(new TileEntity(5,4));
+	}
 	
 	/** 
 	 * Normal / Green biome generation.
@@ -132,8 +138,13 @@ public class Chunk {
 						offsetX, offsetY);
 			}
 		}
+
+		for (int i = tileEntities.size()-1; i >= 0 ; i --) {
+			if (tileEntities.get(i).shouldRemove()) {
+				tileEntities.remove(i);
+				continue;
+			}
+			tileEntities.get(i).draw(batch, x, y, offsetX, offsetY);
+		}
 	}
-	
-	ShapeRenderer sr = new ShapeRenderer();
-	
 }
