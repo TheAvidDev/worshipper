@@ -88,6 +88,11 @@ public class Player {
 			rotation = vx > 0 ? -90 : 90;
 		}
 		
+		if (Math.abs(vx) < 0.1 && Math.abs(vx) < 0.1) {
+			vx = 0;
+			vy = 0;
+		}
+		
 		vx *= 0.5;
 		vy *= 0.5;
 	}
