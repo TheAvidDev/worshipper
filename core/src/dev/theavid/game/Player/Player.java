@@ -50,7 +50,7 @@ public class Player {
 	 */
 	public void update(float dt) {
 		updatePosition(dt);
-		updateDirection();
+		updateRotation();
 	}
 	
 	/**
@@ -77,9 +77,9 @@ public class Player {
 	}
 	
 	/**
-	 * Updates the player direction.
+	 * Updates the player rotation.
 	 */
-	private void updateDirection() {		
+	private void updateRotation() {		
 		if (vx != 0 || vy != 0) {
 			rotation = (float) (Math.atan2(vy, vx) / Math.PI * 180 - 90);
 		} else if (vx == 0 && vy != 0) {
