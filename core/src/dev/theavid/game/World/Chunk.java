@@ -16,7 +16,7 @@ public class Chunk {
 	
 	public Chunk() {
 		tileEntities = new ArrayList<TileEntity>();
-		tileEntities.add(new TileEntity(0,0));
+		tileEntities.add(new TileEntity(5,4));
 	}
 	
 	/** 
@@ -157,13 +157,13 @@ public class Chunk {
 						offsetX, offsetY);
 			}
 		}
-		
+
 		for (int i = tileEntities.size()-1; i >= 0 ; i --) {
 			if (tileEntities.get(i).shouldRemove()) {
 				tileEntities.remove(i);
 				continue;
 			}
-			tileEntities.get(i).draw(batch, x-offsetX, y-offsetY);
+			tileEntities.get(i).draw(batch, x, y, offsetX, offsetY);
 		}
 	}
 }
