@@ -1,4 +1,4 @@
-package com.theaviddev.game.Player;
+package dev.theavid.game.Player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -40,8 +40,8 @@ public class Player {
 		batch.draw(texture, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 8, 8, 16, 16, 1, 1, rotation, 0, 0, 16, 16, false, false);
 	}
 	
-	public void update() {
-		float mult = 5;
+	public void update(float dt) {
+		float mult = 150 * dt;
 		if(Gdx.input.isKeyPressed(Keys.W)) {
 		     y += 1f * mult;
 		     rotation = 0;

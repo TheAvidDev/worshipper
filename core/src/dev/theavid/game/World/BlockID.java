@@ -1,4 +1,4 @@
-package com.theaviddev.game.World;
+package dev.theavid.game.World;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;

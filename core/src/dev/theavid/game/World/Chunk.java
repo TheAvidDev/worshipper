@@ -1,6 +1,9 @@
-package com.theaviddev.game.World;
+package dev.theavid.game.World;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 /** 
  * A chunk that contains many blocks for more efficient rendering.
@@ -147,5 +150,7 @@ public class Chunk {
 			}
 		}
 	}
+	
+	ShapeRenderer sr = new ShapeRenderer();
 	
 }

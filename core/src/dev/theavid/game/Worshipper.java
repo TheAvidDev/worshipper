@@ -1,11 +1,12 @@
-package com.theaviddev.game;
+package dev.theavid.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.theaviddev.game.Player.Player;
-import com.theaviddev.game.World.WorldManager;
+
+import dev.theavid.game.Player.Player;
+import dev.theavid.game.World.WorldManager;
 
 /**
  * Main game class.
@@ -43,7 +44,8 @@ public class Worshipper extends ApplicationAdapter {
 		player.draw(batch);
 		batch.end();
 		
-		player.update();
+		float dt = Gdx.graphics.getDeltaTime();
+		player.update(dt);
 	}
 	
 	/**

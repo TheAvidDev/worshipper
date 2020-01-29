@@ -1,4 +1,4 @@
-package com.theaviddev.game.World;
+package dev.theavid.game.World;
 
 import java.util.Random;
 
@@ -36,11 +36,11 @@ public class WorldManager {
 	 * @param playerY Player y coordinate.
 	 */
 	public void draw(SpriteBatch batch, float playerX, float playerY) {
-		int cX = (int) (playerX + Gdx.graphics.getWidth() / 2) / BLOCK_SIZE / CHUNK_SIZE;
-		int cY = (int) (playerY + Gdx.graphics.getHeight() / 2) / BLOCK_SIZE / CHUNK_SIZE;
-
+		int cX = (int) Math.floor((playerX + Gdx.graphics.getWidth() / 2) / CHUNK_SIZE / BLOCK_SIZE);
+		int cY = (int) Math.floor((playerY + Gdx.graphics.getHeight() / 2) / CHUNK_SIZE / BLOCK_SIZE);
+		
 		for (int x = -2; x <= 2; x ++) {
-			for (int y = -2; y <= 2; y ++) {
+			for (int y = -1; y <= 1; y ++) {
 				Chunk c = new Chunk();
 				c.generate(cX+x, cY+y, elevationPreciseNoise, elevationGeneralNoise, temperatureGeneralNoise, precipitationGeneralNoise);
 				c.draw(batch, cX+x, cY+y, -playerX, -playerY);

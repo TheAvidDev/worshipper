@@ -1,4 +1,4 @@
-package com.theaviddev.game.World;
+package dev.theavid.game.World;
 
 /*
  * OpenSimplex Noise in Java.
