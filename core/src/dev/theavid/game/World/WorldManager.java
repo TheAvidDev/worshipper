@@ -52,17 +52,28 @@ public class WorldManager {
 		
 		for (int x = -2; x <= 2; x ++) {
 			for (int y = -1; y <= 1; y ++) {
-				Chunk c;
 				Point chunkCoords = new Point(cX+x, cY+y);
-				if (!chunkCache.containsKey(chunkCoords)) {
-					c = new Chunk();
-					c.generate(chunkCoords.x, chunkCoords.y, elevationPreciseNoise, elevationGeneralNoise, temperatureGeneralNoise, precipitationGeneralNoise);
-					chunkCache.put(chunkCoords, c);
-				} else {
-					c = chunkCache.get(chunkCoords);
-				}
+				Chunk c = getChunk(chunkCoords);
 				c.draw(batch, chunkCoords.x, chunkCoords.y, -playerX, -playerY);
 			}
+		}
+	}
+	
+	/**
+	 * Gets a chunk from the chunk cache or generates a new one
+	 * if it isn't in the cache.
+	 * 
+	 * @param coords The relative {@link Point} of the chunk.
+	 * @return This chunk.
+	 */
+	private Chunk getChunk(Point coords) {
+		if (!chunkCache.containsKey(coords)) {
+			Chunk c = new Chunk();
+			c.generate(coords.x, coords.y, elevationPreciseNoise, elevationGeneralNoise, temperatureGeneralNoise, precipitationGeneralNoise);
+			chunkCache.put(coords, c);
+			return c;
+		} else {
+			return chunkCache.get(coords);
 		}
 	}
 	
