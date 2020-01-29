@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Player {
 	private float x;
 	private float y;
+	private float rotation;
+	
 	private Texture texture;
 	private AssetManager manager;
 	
@@ -34,22 +36,27 @@ public class Player {
 	}
 	
 	public void draw(SpriteBatch batch) {
-		batch.draw(texture, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		//batch.draw(texture, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		batch.draw(texture, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 8, 8, 16, 16, 1, 1, rotation, 0, 0, 16, 16, false, false);
 	}
 	
 	public void update() {
 		float mult = 5;
 		if(Gdx.input.isKeyPressed(Keys.W)) {
 		     y += 1f * mult;
+		     rotation = 0;
 		}
 		if(Gdx.input.isKeyPressed(Keys.A)) {
 		     x -= 1f * mult;
+		     rotation = 90;
 		}
 		if(Gdx.input.isKeyPressed(Keys.S)) {
 		     y -= 1f * mult;
+		     rotation = 180;
 		}
 		if(Gdx.input.isKeyPressed(Keys.D)) {
 		     x += 1f * mult;
+		     rotation = -90;
 		}
 	}
 	
