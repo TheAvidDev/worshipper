@@ -1,5 +1,7 @@
 package dev.theavid.game.World;
 
+import java.awt.Point;
+import java.util.HashMap;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -17,8 +19,11 @@ public class WorldManager {
 	public static final int BLOCK_SIZE = 16;
 	public static final int CHUNK_SIZE = 32;
 	public static final int WORLD_SIZE = 128;
+	public static final int CHUNK_CACHE = 128;
 	
 	private AssetManager manager;
+	
+	private HashMap<Point, Chunk> chunkCache;
 	
 	/**
 	 * The random number generators responsible
@@ -30,6 +35,10 @@ public class WorldManager {
 	private OpenSimplexNoise temperatureGeneralNoise = new OpenSimplexNoise(rand.nextLong());
 	private OpenSimplexNoise precipitationGeneralNoise = new OpenSimplexNoise(rand.nextLong());
 
+	public WorldManager() {
+		chunkCache = new HashMap<Point, Chunk>();
+	}
+	
 	/**
 	 * Draws world onto the SpriteBatch.
 	 * 
@@ -43,9 +52,16 @@ public class WorldManager {
 		
 		for (int x = -2; x <= 2; x ++) {
 			for (int y = -1; y <= 1; y ++) {
-				Chunk c = new Chunk();
-				c.generate(cX+x, cY+y, elevationPreciseNoise, elevationGeneralNoise, temperatureGeneralNoise, precipitationGeneralNoise);
-				c.draw(batch, cX+x, cY+y, -playerX, -playerY);
+				Chunk c;
+				Point chunkCoords = new Point(cX+x, cY+y);
+				if (!chunkCache.containsKey(chunkCoords)) {
+					c = new Chunk();
+					c.generate(chunkCoords.x, chunkCoords.y, elevationPreciseNoise, elevationGeneralNoise, temperatureGeneralNoise, precipitationGeneralNoise);
+					chunkCache.put(chunkCoords, c);
+				} else {
+					c = chunkCache.get(chunkCoords);
+				}
+				c.draw(batch, chunkCoords.x, chunkCoords.y, -playerX, -playerY);
 			}
 		}
 	}
