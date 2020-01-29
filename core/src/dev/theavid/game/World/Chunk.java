@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
+import dev.theavid.game.Util.OpenSimplexNoise;
+
 /** 
  * A chunk that contains many blocks for more efficient rendering.
  */
