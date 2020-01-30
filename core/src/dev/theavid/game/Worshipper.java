@@ -37,16 +37,17 @@ public class Worshipper extends ApplicationAdapter {
 	 */
 	@Override
 	public void render () {
+		float dt = Gdx.graphics.getDeltaTime();
+		worldManager.update();
+		playerManager.update(dt);
+		
+		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		worldManager.draw(batch);
 		playerManager.draw(batch);
 		batch.end();
-		
-		float dt = Gdx.graphics.getDeltaTime();
-		worldManager.update();
-		playerManager.update(dt);
 	}
 	
 	/**

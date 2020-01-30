@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Random;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -49,12 +48,11 @@ public class WorldManager {
 	 * @param playerY Player y coordinate.
 	 */
 	public void draw(SpriteBatch batch) {
-		int cX = (int) Math.floor((PlayerManager.getPlayerX() + Gdx.graphics.getWidth() / 2) / CHUNK_SIZE / BLOCK_SIZE);
-		int cY = (int) Math.floor((PlayerManager.getPlayerY() + Gdx.graphics.getHeight() / 2) / CHUNK_SIZE / BLOCK_SIZE);
+		Point playerChunkCoords = PlayerManager.getPlayerChunk();
 		
 		for (int x = -2; x <= 2; x ++) {
-			for (int y = -1; y <= 1; y ++) {
-				Point chunkCoords = new Point(cX+x, cY+y);
+			for (int y = -2; y <= 2; y ++) {
+				Point chunkCoords = new Point(playerChunkCoords.x+x, playerChunkCoords.y+y);
 				Chunk c = getChunk(chunkCoords);
 				c.draw(batch, chunkCoords.x, chunkCoords.y, -PlayerManager.getPlayerX(), -PlayerManager.getPlayerY());
 			}
@@ -67,6 +65,16 @@ public class WorldManager {
 	 */
 	public void update() {
 		cleanChunkCache();
+
+		Point playerChunkCoords = PlayerManager.getPlayerChunk();
+		
+		for (int x = -3; x <= 3; x ++) {
+			for (int y = -3; y <= 3; y ++) {
+				Point chunkCoords = new Point(playerChunkCoords.x+x, playerChunkCoords.y+y);
+				Chunk c = getChunk(chunkCoords);
+				c.update();
+			}
+		}
 	}
 	
 	/**
