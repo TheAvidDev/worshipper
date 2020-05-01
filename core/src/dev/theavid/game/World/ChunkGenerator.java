@@ -31,6 +31,11 @@ public class ChunkGenerator implements Runnable {
 		finished = true;
 	}
 	
+	/**
+	 * Return the newly generated blocks.
+	 * 
+	 * @return Block array of the chunk.
+	 */
 	public Block[][] getBlocks() {
 		return blocks;
 	}
@@ -91,11 +96,12 @@ public class ChunkGenerator implements Runnable {
 	 */
 	public void generate() {
 		blocks = new Block[WorldManager.CHUNK_SIZE][WorldManager.CHUNK_SIZE];
+		/*
 		for (int bX = 0; bX < WorldManager.CHUNK_SIZE; bX ++) {
 			for (int bY = 0; bY < WorldManager.CHUNK_SIZE; bY ++) {
 				blocks[bX][bY] = new Block(BlockID.DIRT);
 			}
-		}
+		}*/
 		
 		for (int bX = 0; bX < WorldManager.CHUNK_SIZE; bX ++) {
 			for (int bY = 0; bY < WorldManager.CHUNK_SIZE; bY ++) {

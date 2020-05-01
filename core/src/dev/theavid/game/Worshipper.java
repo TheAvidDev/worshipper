@@ -41,13 +41,12 @@ public class Worshipper extends ApplicationAdapter {
 		worldManager.update();
 		playerManager.update(dt);
 		
-		
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		worldManager.draw(batch);
 		playerManager.draw(batch);
 		batch.end();
+		
+		System.out.println("FPS: " + Gdx.graphics.getFramesPerSecond());
 	}
 	
 	/**

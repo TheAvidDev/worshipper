@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.theavid.game.Entities.TileEntity;
 import dev.theavid.game.Util.OpenSimplexNoise;
 
-/** 
+/**
  * A chunk that contains many blocks for more efficient rendering.
  */
 public class Chunk {
@@ -23,7 +23,7 @@ public class Chunk {
 	
 	public void generate(int cX, int cY, OpenSimplexNoise elevationPreciseNoise, OpenSimplexNoise elevationGeneralNoise, OpenSimplexNoise temperatureGeneralNoise, OpenSimplexNoise precipitationGeneralNoise) {
 		gen = new ChunkGenerator(cX, cY, elevationPreciseNoise, elevationGeneralNoise, temperatureGeneralNoise, precipitationGeneralNoise);
-		Thread chunkGen = new Thread(gen);
+		Thread chunkGen = new Thread(gen, "Chunk Generator Thread");
 		chunkGen.start();
 	}
 	
