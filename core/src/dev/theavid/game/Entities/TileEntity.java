@@ -21,10 +21,26 @@ public class TileEntity {
 	public TileEntity(int x, int y) {
 		this.x = x;
 		this.y = y;
-		AssetManager m = new AssetManager();
-		m.load("entities/tiles/box.png", Texture.class);
-		m.finishLoading();
-		texture = m.get("entities/tiles/box.png", Texture.class);
+	}
+	
+	/**
+	 * Loads the tile entity's texture.
+	 * 
+	 * @param manager {@link AssetManager} to load the texture
+	 * in to.
+	 */
+	public void loadTexture(AssetManager manager) {
+		manager.load("entities/tiles/box.png", Texture.class);
+	}
+	
+	/**
+	 * Assigns the tile entity's texture to the tile entity.
+	 * 
+	 * @param manager {@link AssetManager} to load the texture
+	 * in to.
+	 */
+	public void assignTexture(AssetManager manager) {
+		texture = manager.get("entities/tiles/box.png", Texture.class);
 	}
 	
 	/**
